@@ -1,0 +1,10 @@
+#container {
+	width: 162px;
+	height: 40px;
+}
+
+.button {
+	width: 152px;
+	height: 38px;
+	border: 1px solid black;
+}
