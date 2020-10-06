@@ -15,9 +15,7 @@
       "js": ["contentScript.js", "jquery.min.js"]
     }
   ],
-  "web_accessible_resources" : ["jquery.min.js"],
   "permissions": [
-	"tabs",
-    "activeTab"
+	"tabs"
   ]
 }

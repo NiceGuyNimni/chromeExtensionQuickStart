@@ -1,38 +1,31 @@
-function setMyTabByURL(urlString, callback) {
-  var queryInfo = {
-    currentWindow: true
+let myTab = null;
+
+function setMyTabByURL(urlPattern, callback) {
+  let queryInfo = {
+    currentWindow: true,
+		url: urlPattern
   };
 
-  chrome.tabs.query(queryInfo, function(tabs) {
-	  debugger;
-	  var tab = null;
-	  
-	  for (var i = 0; i < tabs.length; i++) {
-		  if (tabs[i].url.indexOf(urlString) > -1) { // Get the first tab with youtube in it
-			  tab = tabs[i];
-			  break;
-		  }
-	  }
-
-	myTab = tab;
+  chrome.tabs.query(queryInfo, function(tabs = []) {
+	  myTab = tabs[0]; // Get the first tab with youtube in it
   });
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-	setMyTabByURL("youtube", null);
+	setMyTabByURL("https://*.youtube.com/*", null);
 	
-	var playButton = document.getElementById('playButton');
+	const playButton = document.getElementById('playButton');
 	
 	playButton.addEventListener('click', function() {
 		sendMessageToMyTab('play');
 	});
 });
 
-function sendMessageToMyTab(message) {
+function sendMessageToMyTab(actionName) {
 	if (myTab) {
-		chrome.tabs.sendMessage(myTab.id, {message: message}, null, null); // Send message to the selected tab
+		chrome.tabs.sendMessage(myTab.id, {actionName}, null, null); // Send message to the selected tab
 	}
 	else {
-		console.log("NO SELECTED TAB");
+		console.log("NO TAB SELECTED");
 	}
 }

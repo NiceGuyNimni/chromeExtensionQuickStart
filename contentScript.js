@@ -1,9 +1,6 @@
 chrome.runtime.onMessage.addListener(function(message, sender) { // Listen to messages from the popup.js
-	var func = window[message.message];
-	
-	if (func) {
-		func();
-	}
+	if (message.actionName === "play")
+		play();
 });
 
 function play() {
